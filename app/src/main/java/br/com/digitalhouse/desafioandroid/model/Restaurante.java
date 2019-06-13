@@ -8,13 +8,13 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Restaurante implements Parcelable{
+public class Restaurante implements Parcelable {
 
     //Atributos
     private String nomeRestaurante;
     private Endereco endereco;
-    private Time horarioAbertura;
-    private Time horarioFechamento;
+    private String horarioAbertura;
+    private String horarioFechamento;
     private int fotoRestaurante;
     private List<Prato> listaPratosPrincipais = new ArrayList<Prato>();
 
@@ -22,7 +22,7 @@ public class Restaurante implements Parcelable{
     public Restaurante() {
     }
 
-    public Restaurante(String nomeRestaurante, Endereco endereco, Time horarioAbertura, Time horarioFechamento, int fotoRestaurante) {
+    public Restaurante(String nomeRestaurante, Endereco endereco, String horarioAbertura, String horarioFechamento, int fotoRestaurante) {
         this.nomeRestaurante = nomeRestaurante;
         this.endereco = endereco;
         this.horarioAbertura = horarioAbertura;
@@ -30,7 +30,7 @@ public class Restaurante implements Parcelable{
         this.fotoRestaurante = fotoRestaurante;
     }
 
-    public Restaurante(String nomeRestaurante, Endereco endereco, Time horarioAbertura, Time horarioFechamento, int fotoRestaurante, List<Prato> listaPratosPrincipais) {
+    public Restaurante(String nomeRestaurante, Endereco endereco, String horarioAbertura, String horarioFechamento, int fotoRestaurante, List<Prato> listaPratosPrincipais) {
         this.nomeRestaurante = nomeRestaurante;
         this.endereco = endereco;
         this.horarioAbertura = horarioAbertura;
@@ -41,12 +41,11 @@ public class Restaurante implements Parcelable{
 
     protected Restaurante(Parcel in) {
         nomeRestaurante = in.readString();
-        endereco = in.readValue();
-        horarioAbertura = in.readSerializable();
-        horarioFechamento = in.readSerializable();
+        endereco = in.readParcelable(Endereco.class.getClassLoader());
+        horarioAbertura = in.readString();
+        horarioFechamento = in.readString();
         fotoRestaurante = in.readInt();
-        listaPratosPrincipais = in.readArrayList(Restaurante.class.getClassLoader());
-
+        listaPratosPrincipais = in.createTypedArrayList(Prato.CREATOR);
     }
 
     public static final Creator<Restaurante> CREATOR = new Creator<Restaurante>() {
@@ -78,19 +77,19 @@ public class Restaurante implements Parcelable{
         this.endereco = endereco;
     }
 
-    public Time getHorarioAbertura() {
+    public String getHorarioAbertura() {
         return horarioAbertura;
     }
 
-    public void setHorarioAbertura(Time horarioAbertura) {
+    public void setHorarioAbertura(String horarioAbertura) {
         this.horarioAbertura = horarioAbertura;
     }
 
-    public Time getHorarioFechamento() {
+    public String getHorarioFechamento() {
         return horarioFechamento;
     }
 
-    public void setHorarioFechamento(Time horarioFechamento) {
+    public void setHorarioFechamento(String horarioFechamento) {
         this.horarioFechamento = horarioFechamento;
     }
 
@@ -118,12 +117,12 @@ public class Restaurante implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nomeRestaurante);
-        dest.writeValue(endereco);
+        dest.writeParcelable(endereco, flags);
+        dest.writeString(horarioAbertura);
+        dest.writeString(horarioFechamento);
         dest.writeInt(fotoRestaurante);
-        dest.writeSerializable(horarioAbertura);
-        dest.writeSerializable(horarioFechamento);
-        dest.writeInt(fotoRestaurante);
-        dest.writeList(listaPratosPrincipais);
-
+        dest.writeTypedList(listaPratosPrincipais);
     }
 }
+
+

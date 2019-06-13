@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class RestauranteDetalheActivity extends AppCompatActivity
     private RecyclerViewRestauranteDetalheAdapter adapter;
 
     private Restaurante restaurante;
+    private ImageView imageViewPrincipaisPratosRestauranteFoto;
+    private TextView textViewPrincipaisPratoRestauranteNome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +34,16 @@ public class RestauranteDetalheActivity extends AppCompatActivity
         setContentView(R.layout.activity_restaurante_detalhe);
 
         //Inicialização das views
-        recyclerView = findViewById(R.id.recyclerViewRestauranteDetalhe);
+        inicializaViews();
 
         //Valida se há conteudo da tela anterior
         if (getIntent() != null && getIntent().getExtras() != null) {
             restaurante = getIntent().getParcelableExtra("RESTAURANTE");
 
             if (restaurante != null) {
+                //Atualiza a Foto e nome do Resturante na tela
+                imageViewPrincipaisPratosRestauranteFoto.setImageResource(restaurante.getFotoRestaurante());
+                textViewPrincipaisPratoRestauranteNome.setText(restaurante.getNomeRestaurante());
             }
         }
 
@@ -50,7 +57,7 @@ public class RestauranteDetalheActivity extends AppCompatActivity
         //Adiciona o adapter ao recyclerview
         adapter = new RecyclerViewRestauranteDetalheAdapter(getPratos(), this);
 
-        if( adapter != null){
+        if (adapter != null) {
             recyclerView.setAdapter(adapter);
         }
     }
@@ -60,7 +67,7 @@ public class RestauranteDetalheActivity extends AppCompatActivity
 
         List<Prato> pratos = new ArrayList<>();
 
-        for (Prato linhaPrato: restaurante.getListaPratosPrincipais()){
+        for (Prato linhaPrato : restaurante.getListaPratosPrincipais()) {
             pratos.add(linhaPrato);
         }
 
@@ -76,4 +83,14 @@ public class RestauranteDetalheActivity extends AppCompatActivity
         startActivity(intent);
 
     }
+
+    //Inicialização das Views
+    public void inicializaViews(){
+
+        recyclerView = findViewById(R.id.recyclerViewRestauranteDetalhe);
+        imageViewPrincipaisPratosRestauranteFoto = findViewById(R.id.imageViewPrincipaisPratosRestauranteFoto);
+        textViewPrincipaisPratoRestauranteNome = findViewById(R.id.textViewPrincipaisPratoRestauranteNome);
+
+    }
+
 }

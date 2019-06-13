@@ -1,6 +1,9 @@
 package br.com.digitalhouse.desafioandroid.model;
 
-public class Prato{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Prato implements Parcelable {
 
     //Atributos
     private String nome;
@@ -21,6 +24,24 @@ public class Prato{
         this.descricao = descricao;
         this.fotoPrato = fotoPrato;
     }
+
+    protected Prato(Parcel in) {
+        nome = in.readString();
+        descricao = in.readString();
+        fotoPrato = in.readInt();
+    }
+
+    public static final Creator<Prato> CREATOR = new Creator<Prato>() {
+        @Override
+        public Prato createFromParcel(Parcel in) {
+            return new Prato(in);
+        }
+
+        @Override
+        public Prato[] newArray(int size) {
+            return new Prato[size];
+        }
+    };
 
     //Getter and Setter
     public String getNome() {
@@ -45,5 +66,17 @@ public class Prato{
 
     public void setFotoPrato(int fotoPrato) {
         this.fotoPrato = fotoPrato;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nome);
+        dest.writeString(descricao);
+        dest.writeInt(fotoPrato);
     }
 }

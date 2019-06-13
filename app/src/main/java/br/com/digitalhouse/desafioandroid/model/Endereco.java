@@ -1,6 +1,9 @@
 package br.com.digitalhouse.desafioandroid.model;
 
-public class Endereco {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Endereco implements Parcelable {
 
     //Atributos
     private String endereco;
@@ -22,6 +25,27 @@ public class Endereco {
         this.cidade = cidade;
         this.estado = estado;
     }
+
+    protected Endereco(Parcel in) {
+        endereco = in.readString();
+        numero = in.readInt();
+        complemento = in.readString();
+        bairro = in.readString();
+        cidade = in.readString();
+        estado = in.readString();
+    }
+
+    public static final Creator<Endereco> CREATOR = new Creator<Endereco>() {
+        @Override
+        public Endereco createFromParcel(Parcel in) {
+            return new Endereco(in);
+        }
+
+        @Override
+        public Endereco[] newArray(int size) {
+            return new Endereco[size];
+        }
+    };
 
     //Getter and Setter
     public String getEndereco() {
@@ -70,5 +94,20 @@ public class Endereco {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(endereco);
+        dest.writeInt(numero);
+        dest.writeString(complemento);
+        dest.writeString(bairro);
+        dest.writeString(cidade);
+        dest.writeString(estado);
     }
 }
