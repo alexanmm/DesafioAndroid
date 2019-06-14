@@ -18,8 +18,10 @@
 
         <activity
             android:name=".profile.ProfileActivity"
-            android:label="Profile"
-            android:parentActivityName=".restaurante.RestauranteActivity">/>
+            android:label="Profile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.digitalhouse.desafioandroid.restaurante.RestauranteActivity"/>
         </activity>
 
         <activity android:name=".cadastro.CadastroActivity" />
