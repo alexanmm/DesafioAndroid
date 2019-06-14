@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,8 +26,9 @@ public class RestauranteDetalheActivity extends AppCompatActivity
     private RecyclerViewRestauranteDetalheAdapter adapter;
 
     private Restaurante restaurante;
-    private ImageView imageViewPrincipaisPratosRestauranteFoto;
-    private TextView textViewPrincipaisPratoRestauranteNome;
+    private ImageView imageViewRestauranteDetalheRestauranteFoto;
+    private TextView textViewRestauranteDetalheRestauranteNome;
+    private ImageView imageViewRestauranteDetalheVoltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,8 @@ public class RestauranteDetalheActivity extends AppCompatActivity
 
             if (restaurante != null) {
                 //Atualiza a Foto e nome do Resturante na tela
-                imageViewPrincipaisPratosRestauranteFoto.setImageResource(restaurante.getFotoRestaurante());
-                textViewPrincipaisPratoRestauranteNome.setText(restaurante.getNomeRestaurante());
+                imageViewRestauranteDetalheRestauranteFoto.setImageResource(restaurante.getFotoRestaurante());
+                textViewRestauranteDetalheRestauranteNome.setText(restaurante.getNomeRestaurante());
             }
         }
 
@@ -60,6 +62,17 @@ public class RestauranteDetalheActivity extends AppCompatActivity
         if (adapter != null) {
             recyclerView.setAdapter(adapter);
         }
+
+        //Ao clicar na seta para voltar
+        imageViewRestauranteDetalheVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Encerra o processamento da tela atual, a tela anterior será exibida novamente
+                finish();
+
+            }
+        });
     }
 
     // Retorna lista dos principais pratos para recyclerview
@@ -79,17 +92,23 @@ public class RestauranteDetalheActivity extends AppCompatActivity
 
         //Chama a tela de Detalhe do Prato
         Intent intent = new Intent(this, PratoDetalheActivity.class);
-        //intent.putExtra("PRATO", prato);
+        intent.putExtra("PRATO", prato);
         startActivity(intent);
 
     }
 
     //Inicialização das Views
-    public void inicializaViews(){
+    public void inicializaViews() {
 
         recyclerView = findViewById(R.id.recyclerViewRestauranteDetalhe);
-        imageViewPrincipaisPratosRestauranteFoto = findViewById(R.id.imageViewPrincipaisPratosRestauranteFoto);
-        textViewPrincipaisPratoRestauranteNome = findViewById(R.id.textViewPrincipaisPratoRestauranteNome);
+        imageViewRestauranteDetalheRestauranteFoto = findViewById(
+                R.id.imageViewRestauranteDetalheRestauranteFoto);
+
+        textViewRestauranteDetalheRestauranteNome = findViewById(
+                R.id.textViewRestauranteDetalheRestauranteNome);
+
+        imageViewRestauranteDetalheVoltar = findViewById(
+                R.id.imageViewRestauranteDetalheVoltar);
 
     }
 

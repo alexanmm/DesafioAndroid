@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLoginFacebook;
     private Button buttonLoginRegister;
 
+    private Usuario usuario;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(
                             LoginActivity.this,
                             RestauranteActivity.class);
+
+                    //Envia o e-mail do usuário logado para a proxima tela
+                    if (usuario != null) {
+                        intent.putExtra("EMAIL", usuario.getEmail());
+                    }
 
                     startActivity(intent);
                 }
@@ -114,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             String textPassword = textInputLoginPassword.getEditText().getText().toString();
 
             //Recuperar os dados salvos
-            Usuario usuario = getDadosUsuario(textEmail);
+            usuario = Usuario.getDadosUsuario(getApplicationContext(), textEmail);
 
             //Ignora se as preferências forem nulas ou vazias
             if (usuario == null || usuario.equals("")) {
@@ -147,24 +154,6 @@ public class LoginActivity extends AppCompatActivity {
 
         return true;
 
-    }
-
-    public Usuario getDadosUsuario(String email) {
-
-        Usuario usuario = new Usuario();
-
-        //Recuperar os dados salvos
-        SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
-
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(email, "");
-
-        if (!(json == null) && !(json.isEmpty())) {
-            //Transforma na Classe Usuário
-            usuario = gson.fromJson(json, Usuario.class);
-        }
-
-        return usuario;
     }
 
     public void setUltimoLoginEfetuado(String email) {

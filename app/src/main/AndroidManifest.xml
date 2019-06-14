@@ -9,12 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".restaurante.PratoDetalheActivity"></activity>
-        <activity android:name=".restaurante.RestauranteDetalheActivity" />
-        <activity android:name=".profile.CreditCardsActivity" />
-        <activity android:name=".profile.ProfileActivity" />
+
+        <activity android:name=".restaurante.PratoDetalheActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <activity android:name=".restaurante.RestauranteDetalheActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:label="Profile"
+            android:parentActivityName=".restaurante.RestauranteActivity">/>
+        </activity>
+
         <activity android:name=".cadastro.CadastroActivity" />
-        <activity android:name=".splash.SplashActivity"
+        <activity
+            android:name=".splash.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <intent-filter>

@@ -39,8 +39,15 @@ public class CadastroActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (validaDadosCadastro() == true) {
+                    //Prepara dados do usuario
+                    String textName = textInputCadastroName.getEditText().getText().toString();
+                    String textEmail = textInputCadastroEmail.getEditText().getText().toString();
+                    String textPassword = textInputCadastroPassword.getEditText().getText().toString();
+
+                    Usuario usuario = new Usuario(textEmail, textName, textPassword);
+
                     //Efetua o cadastro do Usuário
-                    setDadosUsuario();
+                    Usuario.setDadosUsuario(getApplicationContext(), usuario);
 
                     //Chama a Tela Home (lista de restaurantes)
                     Intent intent = new Intent(
@@ -112,33 +119,4 @@ public class CadastroActivity extends AppCompatActivity {
 
         return true;
     }
-
-    //Gravar dados do usuário
-    public void setDadosUsuario() {
-
-        String textName = textInputCadastroName.getEditText().getText().toString();
-        String textEmail = textInputCadastroEmail.getEditText().getText().toString();
-        String textPassword = textInputCadastroPassword.getEditText().getText().toString();
-
-        SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        //Prepara dados do usuário
-        Usuario usuario = new Usuario(textEmail, textName, textPassword);
-
-        //Armazena os dados do usuario internamente
-        Gson gson = new Gson();
-        String json = gson.toJson(usuario);
-        editor.putString(textEmail, json); //Utiliza o Email como chave
-        editor.commit();
-
-        //Usuário & cadastrado com sucesso
-        Toast.makeText(
-                getApplicationContext(),
-                "Usuário " + textName + " cadastrado com sucesso!",
-                Toast.LENGTH_SHORT
-        ).show();
-
-    }
-
 }

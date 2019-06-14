@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -16,22 +20,28 @@ import br.com.digitalhouse.desafioandroid.interfaces.RecyclerViewRestauranteClic
 import br.com.digitalhouse.desafioandroid.model.Endereco;
 import br.com.digitalhouse.desafioandroid.model.Prato;
 import br.com.digitalhouse.desafioandroid.model.Restaurante;
+import br.com.digitalhouse.desafioandroid.model.Usuario;
+import br.com.digitalhouse.desafioandroid.profile.ProfileActivity;
 
 public class RestauranteActivity extends AppCompatActivity implements RecyclerViewRestauranteClickListener {
 
     private RecyclerView recyclerView;
     private RecyclerViewRestauranteAdapter adapter;
 
+    private String textChaveEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurante);
 
-        //Toolbar toolbar = findViewById(R.layout.toolbar);
-        //setSupportActionBar(toolbar);
-
         //Inicialização das views
         recyclerView = findViewById(R.id.recyclerViewRestaurante);
+
+        //Valida se há conteudo da tela anterior
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            textChaveEmail = getIntent().getStringExtra("EMAIL");
+        }
 
         //Adiciona o layout manager ao recyclerview
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -43,6 +53,34 @@ public class RestauranteActivity extends AppCompatActivity implements RecyclerVi
             recyclerView.setAdapter(adapter);
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.menuProfile) {
+
+            Intent intent = new Intent(RestauranteActivity.this,
+                    ProfileActivity.class);
+
+            //Envia dados do usuário para a próxima tela
+            if (textChaveEmail != null) {
+                intent.putExtra("EMAIL", textChaveEmail);
+            }
+
+            startActivity(intent);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = new MenuInflater(getApplicationContext());
+        inflater.inflate(R.menu.toolbar_menu, menu);
+
+        return true;
     }
 
     // Retorna lista de restaurantes para recyclerview
@@ -150,7 +188,8 @@ public class RestauranteActivity extends AppCompatActivity implements RecyclerVi
 
     public int converteImagem(String nomeImagem) {
 
-        return getResources().getIdentifier(getPackageName() + ":drawable/" + nomeImagem, null, null);
+        return getResources().getIdentifier(
+                getPackageName() + ":drawable/" + nomeImagem, null, null);
 
     }
 

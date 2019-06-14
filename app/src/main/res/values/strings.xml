@@ -9,4 +9,7 @@
     <string name="register">REGISTER</string>
     <string name="name">Name</string>
     <string name="repeat_password">Repeat password</string>
+    <string name="save_profile">SAVE PROFILE</string>
+    <string name="pratos_principais">Pratos Principais</string>
+    <string name="nome_do_restaurante">Nome do Restaurante</string>
 </resources>

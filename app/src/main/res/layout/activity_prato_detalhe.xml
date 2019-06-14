@@ -1,11 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".restaurante.PratoDetalheActivity">
+    android:orientation="vertical">
 
-    <include layout="@layout/content_restaurante_detalhe" />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="246dp">
 
-</android.support.constraint.ConstraintLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewPratoDetalhePratoFoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/splash" />
+
+            <ImageView
+                android:id="@+id/imageViewPratoDetalheVoltar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_arrow_back_white_24dp" />
+
+            <TextView
+                android:id="@+id/textViewPratoDetalheNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:paddingLeft="16dp"
+                android:paddingBottom="8dp"
+                android:text="Nome do Prato"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/textViewPratoDetalheDescricaoPrato"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:text="Descrição do Prato"
+        android:textSize="18sp" />
+
+
+</LinearLayout>
